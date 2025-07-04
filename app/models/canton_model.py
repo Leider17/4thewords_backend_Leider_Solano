@@ -1,5 +1,5 @@
 from sqlmodel import Field
-from schemas.canton_schema import CantonBase
+from app.schemas.canton_schema import CantonBase
 from typing import Optional
 
 class Canton(CantonBase,table=True):

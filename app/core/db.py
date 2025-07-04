@@ -2,10 +2,10 @@ from typing import Annotated
 from fastapi import Depends,FastAPI
 from sqlmodel import SQLModel, create_engine, Session
 from decouple import config 
-from models.legend_model import Legend
-from models.province_model import Province
-from models.canton_model import Canton
-from models.district_model import District
+from app.models.legend_model import Legend
+from app.models.province_model import Province
+from app.models.canton_model import Canton
+from app.models.district_model import District
 
 
 URL_DB=config("DATABASE_URL")

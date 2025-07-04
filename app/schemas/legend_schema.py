@@ -5,8 +5,8 @@ from datetime import datetime
 
 class LegendBase(SQLModel):
     
-    name: str = Field(min_length=5, max_length=100)
-    description: str = Field(min_length=3, max_length=100)
+    name: str = Field(min_length=5, max_length=30)
+    description: str = Field(min_length=3, max_length=255)
     category_id: int = Field(default=None, foreign_key="categories.id")
     legend_date: datetime
     image_url: Optional[str] = None 

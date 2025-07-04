@@ -1,5 +1,5 @@
 from sqlmodel import Field
-from schemas.district_schema import DistrictBase
+from app.schemas.district_schema import DistrictBase
 from typing import Optional
 
 class District(DistrictBase,table=True):

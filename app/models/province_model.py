@@ -1,5 +1,5 @@
 from sqlmodel import Field
-from schemas.province_schema import ProvinceBase
+from app.schemas.province_schema import ProvinceBase
 from typing import Optional
 
 class Province(ProvinceBase,table=True):

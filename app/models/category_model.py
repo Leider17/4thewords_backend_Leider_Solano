@@ -1,4 +1,4 @@
-from schemas.category_schema import CategoryBase
+from app.schemas.category_schema import CategoryBase
 from sqlmodel import Field
 
 
