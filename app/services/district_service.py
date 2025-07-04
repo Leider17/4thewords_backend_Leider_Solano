@@ -10,6 +10,8 @@ def get_districts(session: SessionLocal, canton_id: Optional[int] = None, provin
             statement = select(District).where(District.canton_id == canton_id)
         elif province_id:
             statement = select(District).join(Canton).where(Canton.province_id == province_id)
+        else:
+            statement = select(District)
         districts = session.exec(statement).all()
         return districts
     except Exception as e:
