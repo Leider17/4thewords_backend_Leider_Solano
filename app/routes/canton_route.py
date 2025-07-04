@@ -1,5 +1,7 @@
-from fastapi import APIRouter, HTTPException, status
-from app.core.db import SessionLocal
+from fastapi import APIRouter, HTTPException, status, Depends
+from typing import Optional
+from sqlmodel import Session
+from app.core.db import get_session
 from app.models.canton_model import Canton
 from app.services.canton_service import get_cantons_by_province
 
@@ -8,8 +10,8 @@ router= APIRouter(
     tags=["Cantons"] 
 )
 
-@router.get("/province/{province_id}",response_model=list[Canton])
-async def get_cantons_route(province_id: int, session: SessionLocal = SessionLocal):
+@router.get("",response_model=list[Canton])
+async def get_cantons_route(province_id: Optional[int]=None, session: Session = Depends(get_session)):
     cantons= get_cantons_by_province(session, province_id)
     if cantons is None:
         raise HTTPException(
