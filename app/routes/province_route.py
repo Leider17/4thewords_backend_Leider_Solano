@@ -1,7 +1,9 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends
 from app.core.db import SessionLocal
 from app.models.province_model import Province
 from app.services.province_service import get_all_provinces
+from app.core.auth import get_current_user
+from app.schemas.user_schema import UserBase
 
 router= APIRouter(
     prefix="/provinces",
@@ -9,7 +11,7 @@ router= APIRouter(
 )
 
 @router.get("",response_model=list[Province])
-async def get_provinces_route(session: SessionLocal = SessionLocal):
+async def get_provinces_route(session: SessionLocal = SessionLocal, current_user: UserBase = Depends(get_current_user),):
     """
     Obtiene todas las provincias
 

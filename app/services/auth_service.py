@@ -27,7 +27,7 @@ def register_user_service(user_create: UserCreate, session: Session) -> Union[To
         session.commit()
         session.refresh(db_user)
 
-        access_token_expires = timedelta(minutes=30)
+        access_token_expires = timedelta(minutes=60)
         access_token = create_access_token(
             data={"sub": db_user.email}, expires_delta=access_token_expires
         )

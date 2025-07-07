@@ -4,6 +4,8 @@ from sqlmodel import Session
 from app.core.db import get_session
 from app.models.district_model import District
 from app.services.district_service import get_districts
+from app.core.auth import get_current_user
+from app.schemas.user_schema import UserBase
 
 router= APIRouter(
     prefix="/districts",
@@ -11,7 +13,7 @@ router= APIRouter(
 )
 
 @router.get("/",response_model=list[District])
-async def get_districts_route(canton_id: Optional[int]=None,province_id: Optional[int]=None, session: Session= Depends(get_session)):
+async def get_districts_route(canton_id: Optional[int]=None,province_id: Optional[int]=None, session: Session= Depends(get_session),current_user: UserBase = Depends(get_current_user),):
     """
     Obtiene los distritos, opcionalmente filtrados por canton y provincia
 

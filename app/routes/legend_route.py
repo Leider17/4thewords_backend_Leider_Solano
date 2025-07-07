@@ -1,4 +1,4 @@
-from fastapi import APIRouter, HTTPException, status, File, UploadFile, Form
+from fastapi import APIRouter, HTTPException, status, File, UploadFile, Form,Depends
 from typing import Optional
 from datetime import datetime
 from app.core.db import SessionLocal
@@ -13,6 +13,8 @@ from app.services.legend_service import (
     delete_legend
 )
 from pydantic import ValidationError
+from app.core.auth import get_current_user
+from app.schemas.user_schema import UserBase
 
 router= APIRouter(
     prefix="/legends",
@@ -20,7 +22,7 @@ router= APIRouter(
 )
 
 @router.get("", response_model=list[LegendRead])
-async def get_legends_route(session: SessionLocal = SessionLocal):
+async def get_legends_route(session: SessionLocal = SessionLocal,current_user: UserBase = Depends(get_current_user)):
     """
     Obtiene todas las leyendas
 
@@ -48,7 +50,9 @@ async def get_legends_filters_route(
     province_id: Optional[int] = None,
     canton_id: Optional[int] = None,
     district_id: Optional[int] = None,
-    session: SessionLocal = SessionLocal
+    session: SessionLocal = SessionLocal,
+    current_user: UserBase = Depends(get_current_user)
+    
 ):
     """
     Obtiene las leyendas a partir de los diferentes filtros
@@ -77,7 +81,7 @@ async def get_legends_filters_route(
     return legends
 
 @router.get("/{legend_id}", response_model=LegendRead)
-async def get_legend_route(legend_id: int, session: SessionLocal = SessionLocal):
+async def get_legend_route(legend_id: int, session: SessionLocal = SessionLocal,current_user: UserBase = Depends(get_current_user)):
     """
     Obtiene una leyenda especifica
 
@@ -104,6 +108,7 @@ async def create_legend_route(
     legend_date: datetime = Form(...),
     district_id: int = Form(...),
     image_file: Optional[UploadFile] = File(None), 
+    current_user: UserBase = Depends(get_current_user),
     session: SessionLocal = SessionLocal):
     """
     Crea una leyenda
@@ -139,6 +144,7 @@ async def create_legend_route(
     
 @router.patch("/{legend_id}", response_model=Legend)
 async def update_legend_route(legend_id: int, 
+    current_user: UserBase = Depends(get_current_user),
     name: str = Form(...),
     description: str = Form(...),
     category_id: int = Form(...),
@@ -178,7 +184,7 @@ async def update_legend_route(legend_id: int,
         )
     
 @router.delete("/{legend_id}", status_code=status.HTTP_200_OK)
-async def delete_legend_route(legend_id: int, session: SessionLocal = SessionLocal):
+async def delete_legend_route(legend_id: int, session: SessionLocal = SessionLocal, current_user: UserBase = Depends(get_current_user)):
     """
     Elimina una leyenda
 
