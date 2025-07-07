@@ -12,6 +12,15 @@ router= APIRouter(
 
 @router.get("",response_model=list[Canton])
 async def get_cantons_route(province_id: Optional[int]=None, session: Session = Depends(get_session)):
+    """
+    Obtiene los cantones, opcionalmente filtrados por provincia
+
+    Args:
+        como parametros recibe el id de la provincia y la session de la base de datos.
+
+    Returns:
+        una lista de cantones, en caso de fallar devuelve un status 500.
+    """
     cantons= get_cantons_by_province(session, province_id)
     if cantons is None:
         raise HTTPException(

@@ -10,6 +10,15 @@ router= APIRouter(
 
 @router.get("", response_model=list[Category])
 async def get_categories_route(session: SessionLocal = SessionLocal):
+    """
+    Obtiene todas las categorias
+
+    Args:
+        como parametro recibe la session de la base de datos.
+
+    Returns:
+        una lista de categorias, en caso de fallar devuelve un status 500.
+    """
     categories= get_all_categories(session)
     if categories is None:
         raise HTTPException(

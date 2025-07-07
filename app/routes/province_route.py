@@ -10,6 +10,15 @@ router= APIRouter(
 
 @router.get("",response_model=list[Province])
 async def get_provinces_route(session: SessionLocal = SessionLocal):
+    """
+    Obtiene todas las provincias
+
+    Args:
+        como parametro recibe la session de la base de datos.
+
+    Returns:
+        una lista de provincias, en caso de fallar devuelve un status 500.
+    """
     provinces= get_all_provinces(session)
     if provinces is None:
         raise HTTPException(
