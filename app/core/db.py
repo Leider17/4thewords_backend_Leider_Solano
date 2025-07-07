@@ -6,6 +6,8 @@ from app.models.legend_model import Legend
 from app.models.province_model import Province
 from app.models.canton_model import Canton
 from app.models.district_model import District
+from app.models.category_model import Category
+from app.models.user_model import User
 
 
 URL_DB=config("DATABASE_URL")

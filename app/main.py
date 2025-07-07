@@ -6,6 +6,7 @@ from app.routes.canton_route import router as canton_router
 from app.routes.district_route import router as district_router
 from app.routes.legend_route import router as legend_router
 from app.routes.category_route import router as category_router
+from app.routes.auth_route import router as auth_router
 
 
 app = FastAPI(lifespan=create_all_tables)
@@ -28,3 +29,4 @@ app.include_router(canton_router)
 app.include_router(district_router)
 app.include_router(legend_router)
 app.include_router(category_router)
+app.include_router(auth_router)
